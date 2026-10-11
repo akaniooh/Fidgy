@@ -14,13 +14,13 @@ class StartGameDialog extends AppDialog {
               ButtonWidget(
                 onTap: startGame,
                 label: 'Begin',
-                color: AppColors.defaultColors.mainGreen,
+                color: AppColors.of(ctx).mainGreen,
               ),
               SizedBox(height: 56.h),
               ButtonWidget(
                 onTap: GeneralManager.i.goHome,
                 label: 'Close',
-                color: AppColors.defaultColors.textMedium,
+                color: AppColors.of(ctx).neutralFill,
               ),
             ],
           ),

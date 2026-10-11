@@ -35,7 +35,7 @@ class GameOverDialog extends AppDialog {
               ButtonWidget(
                 onTap: GeneralManager.i.goHome,
                 label: 'Go Home',
-                color: AppColors.of(context).textMute,
+                color: AppColors.of(context).neutralFill,
               ),
             ],
           ),

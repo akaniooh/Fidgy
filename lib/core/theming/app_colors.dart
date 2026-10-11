@@ -1,70 +1,84 @@
 import 'package:flutter/material.dart';
 
+/// Colour tokens for both themes.
+///
+/// Light  = "calm clinical": cool whites with a deep teal accent.
+/// Dark   = "dark premium":  deep navy with a mint accent.
+///
+/// Older code refers to [mainBlue] as the accent, so it is kept and
+/// [accent] is an alias for it.
 class AppColors extends ThemeExtension<AppColors> {
-  final Color mainGreen;
-  final Color mainOrange;
-  final Color mainBlue;
-  final Color mainYellow;
-  final Color mainRed;
-  final Color textStrong;
-  final Color textMedium;
-  final Color backgroundColor;
-
-  final Color primaryColor;
-  final Color secondaryColor;
-  final Color tertiaryColor;
-  final Color overlayBackground;
-  final Color textMute;
-  final Color grey1;
-  final Color grey2;
-  final Color grey3;
-  final Color grey4;
-  final Color grey5;
-  final Color attitudeErrorLight;
-  final Color attitudeErrorMain;
-  final Color attitudeErrorDark;
-  final Color attitudeSuccessLight;
-  final Color attitudeSuccessMain;
-  final Color attitudeSuccessDark;
-  final Color attitudeWarningLight;
-  final Color attitudeWarningMain;
-  final Color attitudeWarningDark;
-  final Color attitudeInfoLight;
-  final Color attitudeInfoMain;
-  final Color attitudeInfoDark;
-
   const AppColors({
-    required this.mainGreen,
-    required this.mainOrange,
-    required this.mainBlue,
-    required this.mainYellow,
-    required this.mainRed,
+    required this.isDark,
+    required this.backgroundColor,
+    required this.surface,
+    required this.surfaceAlt,
+    required this.outline,
+    required this.neutralFill,
     required this.textStrong,
     required this.textMedium,
-    required this.backgroundColor,
-    required this.primaryColor,
-    required this.secondaryColor,
-    required this.tertiaryColor,
-    required this.overlayBackground,
     required this.textMute,
-    required this.grey1,
-    required this.grey2,
-    required this.grey3,
-    required this.grey4,
-    required this.grey5,
-    required this.attitudeErrorLight,
-    required this.attitudeErrorMain,
-    required this.attitudeErrorDark,
-    required this.attitudeSuccessLight,
-    required this.attitudeSuccessMain,
-    required this.attitudeSuccessDark,
-    required this.attitudeWarningLight,
-    required this.attitudeWarningMain,
-    required this.attitudeWarningDark,
-    required this.attitudeInfoLight,
-    required this.attitudeInfoMain,
-    required this.attitudeInfoDark,
+    required this.mainBlue,
+    required this.mainGreen,
+    required this.mainOrange,
+    required this.mainYellow,
+    required this.mainRed,
+    required this.shadow,
   });
+
+  final bool isDark;
+
+  /// Page background.
+  final Color backgroundColor;
+
+  /// Cards, dialogs, bars.
+  final Color surface;
+
+  /// Chips and secondary panels sitting on a surface.
+  final Color surfaceAlt;
+
+  /// Hairline borders and dividers.
+  final Color outline;
+
+  /// Inactive / neutral fills (inactive finger, "off" buttons, tracks).
+  final Color neutralFill;
+
+  /// Primary text.
+  final Color textStrong;
+
+  /// Secondary text.
+  final Color textMedium;
+
+  /// Hints and disabled text.
+  final Color textMute;
+
+  /// The accent colour.
+  final Color mainBlue;
+  final Color mainGreen;
+  final Color mainOrange;
+  final Color mainYellow;
+  final Color mainRed;
+
+  /// Soft drop-shadow colour.
+  final Color shadow;
+
+  Color get accent => mainBlue;
+  Color get onAccent => onColor(mainBlue);
+
+  /// Readable text colour (white or near-black) for content drawn on [fill].
+  Color onColor(Color fill) {
+    const dark = Color(0xFF0A1220);
+    const light = Colors.white;
+    double contrast(Color a, Color b) {
+      final la = a.computeLuminance();
+      final lb = b.computeLuminance();
+      final hi = la > lb ? la : lb;
+      final lo = la > lb ? lb : la;
+      return (hi + 0.05) / (lo + 0.05);
+    }
+
+    return contrast(fill, light) >= contrast(fill, dark) ? light : dark;
+  }
 
   static AppColors of(BuildContext context) {
     final theme = Theme.of(context).extension<AppColors>();
@@ -74,108 +88,99 @@ class AppColors extends ThemeExtension<AppColors> {
     return theme;
   }
 
-  static const defaultColors = AppColors(
-    mainGreen: Color(0xFF61E002),
-    mainOrange: Color(0xFFFF9600),
-    mainBlue: Color(0xFF199EDD),
-    mainYellow: Color(0xFFECD032),
-    mainRed: Color(0xFFFC0000),
-    textStrong: Color(0xFFFFFFFF),
-    textMedium: Color(0xFFD4D4D4),
-    backgroundColor: Color(0xFFFAFAFA),
-    primaryColor: Color(0xFF00F9BE),
-    secondaryColor: Color(0xFF011936),
-    tertiaryColor: Color(0xFF009F6B),
-    overlayBackground: Color(0xFF03441D),
-    textMute: Color(0xFF9EA7A5),
-    grey1: Color(0xFFCDD4D2),
-    grey2: Color(0xFFABB7B4),
-    grey3: Color(0xFF81938E),
-    grey4: Color(0xFF576E68),
-    grey5: Color(0xFF2D4A43),
-    attitudeErrorLight: Color(0xFFFDDEDE),
-    attitudeErrorMain: Color(0xFFF75859),
-    attitudeErrorDark: Color(0xFF7C2C2D),
-    attitudeSuccessLight: Color(0xFFCCECE4),
-    attitudeSuccessMain: Color(0xFF009F7A),
-    attitudeSuccessDark: Color(0xFF00503D),
-    attitudeWarningLight: Color(0xFFFFEDDC),
-    attitudeWarningMain: Color(0xFFFFA552),
-    attitudeWarningDark: Color(0xFF805229),
-    attitudeInfoLight: Color(0xFFD6EBFF),
-    attitudeInfoMain: Color(0xFF339DFF),
-    attitudeInfoDark: Color(0xFF113455),
+  static const light = AppColors(
+    isDark: false,
+    backgroundColor: Color(0xFFF3F7FA),
+    surface: Color(0xFFFFFFFF),
+    surfaceAlt: Color(0xFFE9F0F4),
+    outline: Color(0xFFD5E0E6),
+    neutralFill: Color(0xFFDCE6EB),
+    textStrong: Color(0xFF11303B),
+    textMedium: Color(0xFF4B6470),
+    textMute: Color(0xFF8296A1),
+    mainBlue: Color(0xFF0B7A85),
+    mainGreen: Color(0xFF15855A),
+    mainOrange: Color(0xFFD97B0D),
+    mainYellow: Color(0xFFE2AE1B),
+    mainRed: Color(0xFFC9363F),
+    shadow: Color(0x2211303B),
+  );
+
+  static const dark = AppColors(
+    isDark: true,
+    backgroundColor: Color(0xFF0A101E),
+    surface: Color(0xFF111A2E),
+    surfaceAlt: Color(0xFF17233D),
+    outline: Color(0xFF26355A),
+    neutralFill: Color(0xFF1D2A48),
+    textStrong: Color(0xFFEAF1FF),
+    textMedium: Color(0xFFA7B6D0),
+    textMute: Color(0xFF6F81A3),
+    mainBlue: Color(0xFF2EE6C5),
+    mainGreen: Color(0xFF3DDC97),
+    mainOrange: Color(0xFFFFB454),
+    mainYellow: Color(0xFFFFD76B),
+    mainRed: Color(0xFFFF6B7A),
+    shadow: Color(0x66000000),
   );
 
   @override
   AppColors copyWith({
-    Color? mainGreen,
-    Color? mainOrange,
-    Color? mainBlue,
-    Color? mainYellow,
-    Color? mainRed,
+    bool? isDark,
+    Color? backgroundColor,
+    Color? surface,
+    Color? surfaceAlt,
+    Color? outline,
+    Color? neutralFill,
     Color? textStrong,
     Color? textMedium,
-    Color? primaryColor,
-    Color? secondaryColor,
-    Color? tertiaryColor,
-    Color? backgroundColor,
-    Color? overlayBackground,
     Color? textMute,
-    Color? grey1,
-    Color? grey2,
-    Color? grey3,
-    Color? grey4,
-    Color? grey5,
-    Color? attitudeErrorLight,
-    Color? attitudeErrorMain,
-    Color? attitudeErrorDark,
-    Color? attitudeSuccessLight,
-    Color? attitudeSuccessMain,
-    Color? attitudeSuccessDark,
-    Color? attitudeWarningLight,
-    Color? attitudeWarningMain,
-    Color? attitudeWarningDark,
-    Color? attitudeInfoLight,
-    Color? attitudeInfoMain,
-    Color? attitudeInfoDark,
+    Color? mainBlue,
+    Color? mainGreen,
+    Color? mainOrange,
+    Color? mainYellow,
+    Color? mainRed,
+    Color? shadow,
   }) {
     return AppColors(
-      mainGreen: mainGreen ?? this.mainGreen,
-      mainOrange: mainOrange ?? this.mainOrange,
-      mainBlue: mainBlue ?? this.mainBlue,
-      mainYellow: mainYellow ?? this.mainYellow,
-      mainRed: mainRed ?? this.mainRed,
+      isDark: isDark ?? this.isDark,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      surface: surface ?? this.surface,
+      surfaceAlt: surfaceAlt ?? this.surfaceAlt,
+      outline: outline ?? this.outline,
+      neutralFill: neutralFill ?? this.neutralFill,
       textStrong: textStrong ?? this.textStrong,
       textMedium: textMedium ?? this.textMedium,
-      primaryColor: primaryColor ?? this.primaryColor,
-      secondaryColor: secondaryColor ?? this.secondaryColor,
-      tertiaryColor: tertiaryColor ?? this.tertiaryColor,
-      backgroundColor: backgroundColor ?? this.backgroundColor,
-      overlayBackground: overlayBackground ?? this.overlayBackground,
       textMute: textMute ?? this.textMute,
-      grey1: grey1 ?? this.grey1,
-      grey2: grey2 ?? this.grey2,
-      grey3: grey3 ?? this.grey3,
-      grey4: grey4 ?? this.grey4,
-      grey5: grey5 ?? this.grey5,
-      attitudeErrorLight: attitudeErrorLight ?? this.attitudeErrorLight,
-      attitudeErrorMain: attitudeErrorMain ?? this.attitudeErrorMain,
-      attitudeErrorDark: attitudeErrorDark ?? this.attitudeErrorDark,
-      attitudeSuccessLight: attitudeSuccessLight ?? this.attitudeSuccessLight,
-      attitudeSuccessMain: attitudeSuccessMain ?? this.attitudeSuccessMain,
-      attitudeSuccessDark: attitudeSuccessDark ?? this.attitudeSuccessDark,
-      attitudeWarningLight: attitudeWarningLight ?? this.attitudeWarningLight,
-      attitudeWarningMain: attitudeWarningMain ?? this.attitudeWarningMain,
-      attitudeWarningDark: attitudeWarningDark ?? this.attitudeWarningDark,
-      attitudeInfoLight: attitudeInfoLight ?? this.attitudeInfoLight,
-      attitudeInfoMain: attitudeInfoMain ?? this.attitudeInfoMain,
-      attitudeInfoDark: attitudeInfoDark ?? this.attitudeInfoDark,
+      mainBlue: mainBlue ?? this.mainBlue,
+      mainGreen: mainGreen ?? this.mainGreen,
+      mainOrange: mainOrange ?? this.mainOrange,
+      mainYellow: mainYellow ?? this.mainYellow,
+      mainRed: mainRed ?? this.mainRed,
+      shadow: shadow ?? this.shadow,
     );
   }
 
   @override
   AppColors lerp(covariant AppColors? other, double t) {
-    return other ?? this;
+    if (other == null) return this;
+    Color mix(Color a, Color b) => Color.lerp(a, b, t)!;
+    return AppColors(
+      isDark: t < 0.5 ? isDark : other.isDark,
+      backgroundColor: mix(backgroundColor, other.backgroundColor),
+      surface: mix(surface, other.surface),
+      surfaceAlt: mix(surfaceAlt, other.surfaceAlt),
+      outline: mix(outline, other.outline),
+      neutralFill: mix(neutralFill, other.neutralFill),
+      textStrong: mix(textStrong, other.textStrong),
+      textMedium: mix(textMedium, other.textMedium),
+      textMute: mix(textMute, other.textMute),
+      mainBlue: mix(mainBlue, other.mainBlue),
+      mainGreen: mix(mainGreen, other.mainGreen),
+      mainOrange: mix(mainOrange, other.mainOrange),
+      mainYellow: mix(mainYellow, other.mainYellow),
+      mainRed: mix(mainRed, other.mainRed),
+      shadow: mix(shadow, other.shadow),
+    );
   }
 }

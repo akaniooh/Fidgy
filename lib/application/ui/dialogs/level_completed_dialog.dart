@@ -33,7 +33,7 @@ class LevelCompletedDialog extends AppDialog {
                 ButtonWidget(
                   onTap: GeneralManager.i.replayLevel,
                   label: 'Replay this level',
-                  color: AppColors.of(context).textMute,
+                  color: AppColors.of(context).neutralFill,
                 ),
               ],
             );
@@ -65,7 +65,7 @@ class LevelCompletedDialog extends AppDialog {
                 ButtonWidget(
                   onTap: GeneralManager.i.replayLevel,
                   label: 'Replay this level',
-                  color: AppColors.of(context).textMute,
+                  color: AppColors.of(context).neutralFill,
                 ),
               ],
             );

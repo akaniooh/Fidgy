@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../application/ui/views/splash_view.dart';
@@ -38,7 +37,7 @@ abstract class AppRoutes {
       );
     }
 
-    return Platform.isIOS
+    return defaultTargetPlatform == TargetPlatform.iOS
         ? CupertinoPageRoute<T>(settings: settings, builder: (_) => view)
         : MaterialPageRoute<T>(settings: settings, builder: (_) => view);
   }

@@ -1,59 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
 class AppTheme {
-  final AppColors colors;
-  final String headingFontFamily;
-  final String bodyFontFamily;
-  // final AppStyles styles;
+  AppTheme._();
 
-  AppTheme({
-    required this.colors,
-    required this.headingFontFamily,
-    required this.bodyFontFamily,
-  }) ;
+  static ThemeData get light => _build(AppColors.light, Brightness.light);
+  static ThemeData get dark => _build(AppColors.dark, Brightness.dark);
 
-  ThemeData get themeData => ThemeData(
-        extensions: [colors],
-        textTheme: GoogleFonts.mochiyPopOneTextTheme(),
-        primaryTextTheme: GoogleFonts.mochiyPopOneTextTheme(),
-        scaffoldBackgroundColor: colors.backgroundColor,
-        primaryColor: colors.primaryColor,
-        /*   appBarTheme: AppBarTheme(backgroundColor: colors.primaryColor),
-        splashColor: colors.tertiaryColor,
-        textTheme: TextTheme(
-          bodySmall: styles.body14Regular,
-          titleSmall: styles.body14Medium,
-        ),
-        canvasColor: colors.backgroundColor,
-        textSelectionTheme: TextSelectionThemeData(
-          cursorColor: colors.attitudeErrorMain,
-          selectionColor: colors.grey3,
-          selectionHandleColor: colors.secondaryColor,
-        ),
-        colorScheme: ColorScheme(
-          primary: colors.primaryColor,
-          onPrimary: colors.backgroundColor,
-          secondary: colors.secondaryColor,
-          onSecondary: colors.backgroundColor,
-          background: colors.backgroundColor,
-          onBackground: colors.backgroundColor,
-          surface: colors.backgroundColor,
-          onSurface: colors.textStrong,
-          error: colors.attitudeErrorDark,
-          onError: colors.attitudeErrorDark,
-          brightness: Brightness.dark,
-        ),
-        dialogBackgroundColor: colors.backgroundColor,
-        bottomSheetTheme: BottomSheetThemeData(
-          backgroundColor: colors.backgroundColor,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(32),
-            ),
-          ),
-        ), */
-      );
+  static ThemeData _build(AppColors c, Brightness brightness) {
+    final base = ThemeData(
+      brightness: brightness,
+      useMaterial3: true,
+      fontFamily: 'Poppins',
+    );
+
+    final scheme = ColorScheme(
+      brightness: brightness,
+      primary: c.accent,
+      onPrimary: c.onAccent,
+      secondary: c.mainGreen,
+      onSecondary: c.onColor(c.mainGreen),
+      error: c.mainRed,
+      onError: c.onColor(c.mainRed),
+      surface: c.surface,
+      onSurface: c.textStrong,
+    );
+
+    final textTheme = base.textTheme.apply(
+      bodyColor: c.textStrong,
+      displayColor: c.textStrong,
+    );
+
+    return base.copyWith(
+      colorScheme: scheme,
+      extensions: [c],
+      scaffoldBackgroundColor: c.backgroundColor,
+      canvasColor: c.backgroundColor,
+      dividerColor: c.outline,
+      textTheme: textTheme,
+      primaryTextTheme: textTheme,
+    );
+  }
 }

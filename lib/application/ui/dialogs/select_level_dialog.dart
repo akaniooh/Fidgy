@@ -49,6 +49,7 @@ class LevelButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = AppColors.of(context);
     return InkResponse(
       onTap: locked ? null : () => onSelect(level),
       child: Container(
@@ -56,14 +57,12 @@ class LevelButton extends StatelessWidget {
         width: 130.r,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: locked
-              ? AppColors.of(context).textMute
-              : AppColors.of(context).mainBlue,
-          boxShadow: const [
+          color: locked ? c.neutralFill : c.accent,
+          boxShadow: [
             BoxShadow(
-              color: Colors.black26,
-              blurRadius: 10,
-              offset: Offset(5, 10),
+              color: locked ? Colors.transparent : c.shadow,
+              blurRadius: 18,
+              offset: const Offset(0, 8),
             ),
           ],
         ),
@@ -71,15 +70,20 @@ class LevelButton extends StatelessWidget {
         margin: EdgeInsets.all(16.r),
         child: locked
             ? Icon(
-                Icons.lock,
-                color: AppColors.of(context).textStrong,
-                size: 56.t,
+                Icons.lock_rounded,
+                color: c.textMute,
+                size: 52.t,
               )
-            : Text(
-                '$level',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 56.t, color: AppColors.of(context).textStrong),
+            : Center(
+                child: Text(
+                  '$level',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 54.t,
+                    fontWeight: FontWeight.w600,
+                    color: c.onAccent,
+                  ),
+                ),
               ),
       ),
     );

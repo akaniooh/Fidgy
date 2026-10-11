@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../common/presentation/presentation.dart';
 import '../../domain/game_config.dart';
 import '../../domain/general_manager.dart';
 import '../components/button_widget.dart';
+import '../components/circle_icon_button.dart';
 import '../components/header_widget.dart';
 
 class SelectDifficultyView extends StatelessWidget {
@@ -49,16 +49,9 @@ class SelectDifficultyView extends StatelessWidget {
                 Positioned(
                   bottom: 48.r,
                   left: 48.r,
-                  child: InkResponse(
+                  child: CircleIconButton(
+                    icon: Icons.home_rounded,
                     onTap: GeneralManager.i.goHome,
-                    child: CircleAvatar(
-                      backgroundColor: AppColors.of(context).mainBlue,
-                      radius: 60.r,
-                      child: SvgPicture.asset(
-                        'assets/home.svg',
-                        height: 74.r,
-                      ),
-                    ),
                   ),
                 ),
               ],

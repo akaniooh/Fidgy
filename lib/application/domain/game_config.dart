@@ -1,20 +1,31 @@
+import 'assist_level.dart';
+
 class GameConfig {
   final int level;
   final Difficulty difficulty;
+  final AssistLevel assist;
   final int maxFailureAllowed;
   final int randomnessSeed;
   final Hand hand;
   final int passMark;
   final int maximumScore;
+  Duration get gameTime => difficulty.gameTime * assist.timeMultiplier;
+  Duration get gameWarningTime =>
+      difficulty.gameWarningTime * assist.timeMultiplier;
+  /// Consecutive hits (no misses) needed for a critical hit: 8 on level 1,
+  /// rising to 20 on level 15. Independent of assist level so results stay
+  /// comparable.
+  int get criticalStreak => 8 + (level - 1) * 6 ~/ 7;
   int get secondStarScore => passMark + (maximumScore - passMark) ~/ 2;
 
   GameConfig({
     required this.level,
     required this.hand,
     required this.difficulty,
+    this.assist = AssistLevel.standard,
   })  : passMark = 15 + (level - 1) * 2,
         maximumScore = 25 + (level - 1) * 3,
-        maxFailureAllowed = 5,
+        maxFailureAllowed = assist.lives,
         randomnessSeed = difficulty.randomnessSeed,
         assert(level >= 1 && level <= 15);
 

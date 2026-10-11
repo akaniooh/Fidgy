@@ -24,26 +24,27 @@ class AppDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = AppColors.of(context);
     return Dialog(
       backgroundColor: Colors.transparent,
+      elevation: 0,
+      surfaceTintColor: Colors.transparent,
       child: Stack(
         fit: StackFit.loose,
         clipBehavior: Clip.none,
         children: [
           Container(
-            constraints: const BoxConstraints(
-              // maxHeight: 600,
-              maxWidth: 800,
-            ),
-            padding: EdgeInsets.all(80.r),
+            constraints: const BoxConstraints(maxWidth: 800),
+            padding: EdgeInsets.all(72.r),
             decoration: BoxDecoration(
-              color: color ?? AppColors.of(context).backgroundColor,
-              borderRadius: BorderRadius.circular(80.r),
-              boxShadow: const [
+              color: color ?? c.surface,
+              borderRadius: BorderRadius.circular(64.r),
+              border: Border.all(color: c.outline),
+              boxShadow: [
                 BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 10,
-                  offset: Offset(5, 10),
+                  color: c.shadow,
+                  blurRadius: 60,
+                  offset: const Offset(0, 24),
                 ),
               ],
             ),
@@ -55,7 +56,11 @@ class AppDialog extends StatelessWidget {
                   Text(
                     heading,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 56.t),
+                    style: TextStyle(
+                      fontSize: 52.t,
+                      fontWeight: FontWeight.w600,
+                      color: c.textStrong,
+                    ),
                   ),
                   SizedBox(height: 48.r),
                   builder(context),
@@ -64,19 +69,28 @@ class AppDialog extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: -32.r,
-            right: -32.r,
+            top: -28.r,
+            right: -28.r,
             child: InkResponse(
               onTap: onClose ?? AppNavigator.of(context).pop,
               child: Container(
+                padding: EdgeInsets.all(14.r),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColors.of(context).mainBlue,
+                  color: c.surfaceAlt,
+                  border: Border.all(color: c.outline),
+                  boxShadow: [
+                    BoxShadow(
+                      color: c.shadow,
+                      blurRadius: 16,
+                      offset: const Offset(0, 6),
+                    ),
+                  ],
                 ),
                 child: Icon(
                   Icons.close_rounded,
-                  size: 120.r,
-                  color: AppColors.of(context).textStrong,
+                  size: 64.r,
+                  color: c.textMedium,
                 ),
               ),
             ),

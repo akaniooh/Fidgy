@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../common/presentation/presentation.dart';
 import '../../domain/game_config.dart';
 import '../../domain/general_manager.dart';
+import '../components/circle_icon_button.dart';
 import '../components/header_widget.dart';
 
 class SelectHandView extends StatelessWidget {
@@ -46,16 +47,9 @@ class SelectHandView extends StatelessWidget {
                 Positioned(
                   bottom: 48.r,
                   left: 48.r,
-                  child: InkResponse(
+                  child: CircleIconButton(
+                    icon: Icons.home_rounded,
                     onTap: GeneralManager.i.goHome,
-                    child: CircleAvatar(
-                      backgroundColor: AppColors.of(context).mainBlue,
-                      radius: 60.r,
-                      child: SvgPicture.asset(
-                        'assets/home.svg',
-                        height: 74.r,
-                      ),
-                    ),
                   ),
                 ),
               ],
@@ -97,8 +91,9 @@ class _HandAndLabel extends StatelessWidget {
           Text(
             hand.description,
             style: TextStyle(
-              fontSize: 58.t,
-              color: Colors.black,
+              fontSize: 54.t,
+              fontWeight: FontWeight.w500,
+              color: AppColors.of(context).textStrong,
             ),
           ),
         ],

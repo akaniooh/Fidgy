@@ -30,9 +30,13 @@ class _ScoreBoardViewState extends State<ScoreBoardView> {
           'Scoreboard',
           style: TextStyle(
             fontSize: 50.t,
+            fontWeight: FontWeight.w600,
           ),
         ),
-        backgroundColor: AppColors.defaultColors.mainOrange,
+        backgroundColor: AppColors.of(context).surface,
+        foregroundColor: AppColors.of(context).textStrong,
+        surfaceTintColor: Colors.transparent,
+        scrolledUnderElevation: 0,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -97,8 +101,8 @@ class _DifficultySelectionButton extends StatelessWidget {
       onTap: () => onSelect(difficulty),
       label: difficulty.name,
       color: selected == difficulty
-          ? AppColors.defaultColors.mainGreen
-          : AppColors.defaultColors.mainBlue,
+          ? AppColors.of(context).accent
+          : AppColors.of(context).neutralFill,
     );
   }
 }
@@ -113,7 +117,7 @@ class _HandScoreboard extends StatelessWidget {
       children: [
         Text(
           hand.description,
-          style: TextStyle(fontSize: 32.t),
+          style: TextStyle(fontSize: 34.t, fontWeight: FontWeight.w600),
         ),
         for (int i = 1; i <= 15; i = i + 5)
           Row(
@@ -151,13 +155,13 @@ class _ScoreDisplay extends StatelessWidget {
         // shape: BoxShape.circle,
         borderRadius: BorderRadius.circular(20.r),
         color: locked
-            ? AppColors.of(context).textMute
-            : AppColors.of(context).mainBlue,
-        boxShadow: const [
+            ? AppColors.of(context).neutralFill
+            : AppColors.of(context).accent,
+        boxShadow: [
           BoxShadow(
-            color: Colors.black26,
-            blurRadius: 10,
-            offset: Offset(5, 10),
+            color: AppColors.of(context).shadow,
+            blurRadius: 18,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
@@ -166,7 +170,7 @@ class _ScoreDisplay extends StatelessWidget {
       child: locked
           ? Icon(
               Icons.minimize_rounded,
-              color: AppColors.of(context).textStrong,
+              color: AppColors.of(context).textMute,
               size: 56.t,
             )
           : Text(
@@ -174,7 +178,8 @@ class _ScoreDisplay extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 24.t,
-                color: AppColors.of(context).textStrong,
+                fontWeight: FontWeight.w500,
+                color: AppColors.of(context).onAccent,
               ),
             ),
     );

@@ -4,6 +4,7 @@ import '../ui/views/game_view.dart';
 import '../ui/views/score_board_view.dart';
 import '../ui/views/select_difficulty_view.dart';
 import '../ui/views/select_hand_view.dart';
+import 'app_settings.dart';
 import 'game_config.dart';
 import 'game_controller.dart';
 import 'game_data.dart';
@@ -42,6 +43,7 @@ class GeneralManager {
       level: _level!,
       hand: _hand!,
       difficulty: _difficulty!,
+      assist: AppSettings.i.assistLevel,
     );
     _beginGame(config);
   }
